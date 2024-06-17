@@ -1,0 +1,28 @@
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row > button {
+  margin-right: 8px;
+  margin-left: 4px;
+}
+
+.row:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.value {
+  margin-top: 2px;
+  padding-right: 16px;
+  padding-left: 16px;
+  font-size: 78px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.textbox {
+  width: 64px;
+  font-size: 18px;
+  text-align: center;
+}
