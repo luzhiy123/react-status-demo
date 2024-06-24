@@ -1,10 +1,11 @@
+import { message } from 'antd';
 import { makeAutoObservable } from 'mobx';
 import { MobXProviderContext } from 'mobx-react';
 import { useContext } from 'react';
 import { fetchCount } from './api';
 
 export default class CountStore {
-  amount: number = 0;
+  count: number = 0;
   status: 'idle' | 'loading' | 'failed' = 'idle';
 
   constructor() {
@@ -14,30 +15,31 @@ export default class CountStore {
     return this.status === 'loading';
   }
   increment() {
-    this.amount += 1;
+    this.count += 1;
   }
   decrement() {
-    this.amount -= 1;
+    this.count -= 1;
   }
-  incrementByAmount(amount: number) {
-    this.amount += amount;
+  incrementByAmount(count: number) {
+    this.count += count;
   }
-  async incrementAsync(amount: number) {
+  async incrementAsync(count: number) {
     this.status = 'loading';
-    await fetchCount(amount).then(
+    await fetchCount(count).then(
       (res) => {
         this.status = 'idle';
         this.incrementByAmount(res.data);
       },
       () => {
         this.status = 'failed';
+        message.error('接口报错！');
       },
     );
   }
 
-  incrementIfOdd(amount: number) {
-    if (this.amount % 2 === 1) {
-      this.incrementByAmount(amount);
+  incrementIfOdd(count: number) {
+    if (this.count % 2 === 1) {
+      this.incrementByAmount(count);
     }
   }
 }

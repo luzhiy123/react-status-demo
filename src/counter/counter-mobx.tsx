@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useStore } from '../counter-store/counter-mobx';
 import styles from './counter-com.module.css';
 
-export const Counter = observer(() => {
+const Counter = () => {
   const [incrementAmount, setIncrementAmount] = useState('2');
   const countStore = useStore('count');
 
@@ -16,7 +16,7 @@ export const Counter = observer(() => {
         <Button aria-label="Decrement value" onClick={() => countStore.decrement()}>
           -
         </Button>
-        <span className={styles.value}>{countStore.amount}</span>
+        <span className={styles.value}>{countStore.count}</span>
         <Button aria-label="Increment value" onClick={() => countStore.increment()}>
           +
         </Button>
@@ -24,7 +24,7 @@ export const Counter = observer(() => {
       <div className={styles.row}>
         <input
           className={styles.textbox}
-          aria-label="Set increment amount"
+          aria-label="Set increment count"
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(e.target.value)}
         />
@@ -39,4 +39,6 @@ export const Counter = observer(() => {
       </div>
     </div>
   );
-});
+};
+
+export default observer(Counter);

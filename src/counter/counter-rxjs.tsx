@@ -5,12 +5,12 @@ import styles from './counter-com.module.css';
 
 const service = new CountStore();
 
-export function Counter() {
-  const [amount, setAmount] = useState(0);
+export default function Counter() {
+  const [count, setAmount] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const subscription = service.amount$.subscribe((res) => {
+    const subscription = service.count$.subscribe((res) => {
       setAmount(res);
     });
     return () => {
@@ -37,7 +37,7 @@ export function Counter() {
         <Button aria-label="Decrement value" onClick={() => service.decrement()}>
           -
         </Button>
-        <span className={styles.value}>{amount}</span>
+        <span className={styles.value}>{count}</span>
         <Button aria-label="Increment value" onClick={() => service.increment()}>
           +
         </Button>
@@ -45,7 +45,7 @@ export function Counter() {
       <div className={styles.row}>
         <input
           className={styles.textbox}
-          aria-label="Set increment amount"
+          aria-label="Set increment count"
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(e.target.value)}
         />

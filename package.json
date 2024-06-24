@@ -1,10 +1,11 @@
 {
-  "name": "counter",
+  "name": "react-status-demo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.1.0",
     "antd": "^5.18.2",
+    "classnames": "^2.5.1",
     "mobx": "^6.12.4",
     "mobx-react": "^9.1.1",
     "react": "^18.2.0",
@@ -22,6 +23,7 @@
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@umijs/fabric": "^4.0.1",
+    "ajv": "^8.16.0",
     "prettier": "^3.3.2",
     "prettier-plugin-css-order": "^2.1.2",
     "react-scripts": "5.0.1",

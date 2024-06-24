@@ -6,6 +6,7 @@ import {
   PayloadAction,
   ThunkAction,
 } from '@reduxjs/toolkit';
+import { message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCount } from './api';
 
@@ -28,17 +29,17 @@ const initialState: CounterState = {
   status: 'idle',
 };
 
-export const incrementAsync = createAsyncThunk('counter/fetchCount', async (amount: number) => {
-  const response = await fetchCount(amount);
+export const incrementAsync = createAsyncThunk('counter/fetchCount', async (count: number) => {
+  const response = await fetchCount(count);
   return response.data;
 });
 
 export const incrementIfOdd =
-  (amount: number): AppThunk =>
+  (count: number): AppThunk =>
   (dispatch, getState) => {
     const currentValue = selectCount(getState());
     if (currentValue % 2 === 1) {
-      dispatch(incrementByAmount(amount));
+      dispatch(incrementByAmount(count));
     }
   };
 
@@ -67,6 +68,7 @@ export const counterSlice = createSlice({
       })
       .addCase(incrementAsync.rejected, (state) => {
         state.status = 'failed';
+        message.error('接口报错！');
       });
   },
 });
@@ -83,3 +85,7 @@ export const store = configureStore({
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
+
+store.subscribe(() => {
+  console.log('all', store.getState());
+});

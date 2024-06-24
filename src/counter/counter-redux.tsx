@@ -13,7 +13,7 @@ import {
 } from '../counter-store/counter-redux';
 import styles from './counter-com.module.css';
 
-export function Counter() {
+export default function Counter() {
   const count = useAppSelector(selectCount);
   const loading = useAppSelector(selectLoading);
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ export function Counter() {
       <div className={styles.row}>
         <input
           className={styles.textbox}
-          aria-label="Set increment amount"
+          aria-label="Set increment count"
           value={incrementAmount}
           onChange={(e) => setIncrementAmount(e.target.value)}
         />

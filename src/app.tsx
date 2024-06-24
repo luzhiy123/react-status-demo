@@ -1,8 +1,9 @@
 import { Tabs } from 'antd';
+import Amount from './amount-box';
 import './app.css';
-import { Counter as MobxCounter } from './counter/counter-mobx';
-import { Counter as ReduxCounter } from './counter/counter-redux';
-import { Counter as RxjsCounter } from './counter/counter-rxjs';
+import MobxCounter from './counter/counter-mobx';
+import ReduxCounter from './counter/counter-redux';
+import RxjsCounter from './counter/counter-rxjs';
 
 function App() {
   const tabs = [
@@ -20,6 +21,11 @@ function App() {
       label: 'rxjs',
       key: 'rxjs',
       children: <RxjsCounter></RxjsCounter>,
+    },
+    {
+      label: 'amount',
+      key: 'amount',
+      children: <Amount></Amount>,
     },
   ];
 

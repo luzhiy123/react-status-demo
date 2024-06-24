@@ -1,7 +1,8 @@
+import { message } from 'antd';
 import { BehaviorSubject, Subject, map, retry, scan, shareReplay, switchMap, tap } from 'rxjs';
 import { fetchCount } from './api';
 export default class CountStore {
-  private amount = 0;
+  private count = 0;
   private status$ = new BehaviorSubject<'idle' | 'loading' | 'failed'>('idle');
   private controller$ = new Subject<number>();
   private asynController$ = new Subject<number>();
@@ -12,8 +13,8 @@ export default class CountStore {
         tap(() => {
           this.status$.next('loading');
         }),
-        switchMap((amount) => {
-          return fetchCount(amount).then((res) => res.data);
+        switchMap((count) => {
+          return fetchCount(count).then((res) => res.data);
         }),
         tap({
           next: () => {
@@ -21,13 +22,14 @@ export default class CountStore {
           },
           error: () => {
             this.status$.next('failed');
+            message.error('接口报错！');
           },
         }),
         retry(),
       )
       .subscribe({
-        next: (amount) => {
-          this.controller$.next(amount);
+        next: (count) => {
+          this.controller$.next(count);
         },
         error: (err) => {
           console.error('fetch count error', err);
@@ -35,8 +37,8 @@ export default class CountStore {
       });
   }
 
-  private changeAmount = (amount: number) => {
-    this.controller$.next(amount);
+  private changeAmount = (count: number) => {
+    this.controller$.next(count);
   };
 
   increment() {
@@ -45,25 +47,25 @@ export default class CountStore {
   decrement() {
     this.changeAmount(-1);
   }
-  incrementByAmount(amount: number) {
-    this.changeAmount(amount);
+  incrementByAmount(count: number) {
+    this.changeAmount(count);
   }
-  async incrementAsync(amount: number) {
-    this.asynController$.next(amount);
+  async incrementAsync(count: number) {
+    this.asynController$.next(count);
   }
 
-  incrementIfOdd(amount: number) {
-    if (this.amount % 2 === 1) {
-      this.changeAmount(amount);
+  incrementIfOdd(count: number) {
+    if (this.count % 2 === 1) {
+      this.changeAmount(count);
     }
   }
 
-  amount$ = this.controller$.pipe(
+  count$ = this.controller$.pipe(
     scan((acc, val) => {
       return acc + val;
     }),
-    tap((amount) => {
-      this.amount = amount;
+    tap((count) => {
+      this.count = count;
     }),
     shareReplay(),
   );
